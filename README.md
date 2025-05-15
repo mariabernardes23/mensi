@@ -1,54 +1,49 @@
-# React + TypeScript + Vite
+## Pré-requisitos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Certifique-se de ter o Node.js e o npm (Node Package Manager) instalados em seu computador. Você pode baixá-los e instalá-los a partir do site oficial do Node.js: [Node.js](https://nodejs.org/).
 
-Currently, two official plugins are available:
+## Passos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Clone o repositório:**
 
-## Expanding the ESLint configuration
+   Abra o terminal (ou o Git Bash no Windows) e execute o seguinte comando:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   git clone https://github.com/mariabernardes23/mensi.git
+   ```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. **Navegue até o diretório do projeto:**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   Use o comando `cd` para entrar no diretório do projeto que você acabou de clonar:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   ```bash
+   cd contextAp
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+3. **Instale as dependências:**
+
+   Execute o comando npm install para instalar todas as dependências necessárias listadas no arquivo `package.json`:
+
+   ```bash
+   npm install
+   npm i react-router-dom
+   npm i styled-components
+   ```
+
+4. **Execute o aplicativo:**
+
+   Após a instalação das dependências, você pode iniciar a aplicação com o seguinte comando:
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Visualize o aplicativo:**
+
+   Após iniciar o aplicativo, abra o seu navegador da web e visite o seguinte endereço:
+
+   ```
+   http://localhost:5173
+   ```
+
+   Isso abrirá a aplicação React.js em seu navegador.
