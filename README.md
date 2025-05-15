@@ -17,7 +17,7 @@ Certifique-se de ter o Node.js e o npm (Node Package Manager) instalados em seu 
    Use o comando `cd` para entrar no diretório do projeto que você acabou de clonar:
 
    ```bash
-   cd contextAp
+   cd mensi
    ```
 
 3. **Instale as dependências:**
