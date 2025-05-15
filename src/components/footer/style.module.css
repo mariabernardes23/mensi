@@ -1,0 +1,9 @@
+.styleFooter {
+    padding: 0.5rem;
+    background-color: #C7E3EE;
+}
+
+.styleFooter p {
+    text-align: center;
+    margin: 0.2rem;
+}
