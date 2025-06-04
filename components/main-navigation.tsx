@@ -60,6 +60,13 @@ export function MainNavigation() {
           Entrar
         </Link>
 
+        <Link
+          href="/register"
+          className="hidden md:block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+        >
+          Criar Conta
+        </Link>
+
         {/* Botão do menu mobile */}
         <button
           className="md:hidden text-gray-800"
@@ -119,6 +126,15 @@ export function MainNavigation() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Entrar
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/register"
+                  className="block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md text-center focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Criar Conta
                 </Link>
               </li>
             </ul>
