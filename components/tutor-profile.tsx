@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { MessageSquare, Clock, Calendar } from "lucide-react"
+import { MessageSquare, Clock, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 // Tipos para os dados do tutor
@@ -34,13 +34,70 @@ interface TutorProfileProps {
 export function TutorProfile({ tutor }: TutorProfileProps) {
   // Estado para controlar o horário selecionado
   const [selectedTime, setSelectedTime] = useState<string>("")
+  const [selectedDate, setSelectedDate] = useState<string>("")
   const router = useRouter()
+
+  // Função para gerar dados do calendário
+  const generateCalendarData = () => {
+    // Data fixa para Junho de 2025
+    const currentMonth = 5 // Junho (0-indexed)
+    const currentYear = 2025
+
+    const firstDay = new Date(currentYear, currentMonth, 1)
+    const lastDay = new Date(currentYear, currentMonth + 1, 0)
+    const startDate = new Date(firstDay)
+    startDate.setDate(startDate.getDate() - firstDay.getDay())
+
+    const days = []
+    const current = new Date(startDate)
+
+    for (let i = 0; i < 42; i++) {
+      days.push(new Date(current))
+      current.setDate(current.getDate() + 1)
+    }
+
+    return {
+      days,
+      monthName: "Junho de 2025",
+      currentMonth,
+      currentYear,
+    }
+  }
+
+  const calendarData = generateCalendarData()
+
+  // Função para verificar se uma data tem horários disponíveis
+  const hasAvailableSlots = (date: Date) => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    date.setHours(0, 0, 0, 0)
+
+    // Disponível apenas para dias futuros e alguns dias específicos
+    if (date < today) return false
+
+    const dayOfWeek = date.getDay()
+    // Disponível de segunda a sexta (1-5)
+    return dayOfWeek >= 1 && dayOfWeek <= 5
+  }
+
+  // Função para formatar data
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("pt-BR")
+  }
+
+  // Função para lidar com seleção de data
+  const handleDateSelection = (date: Date) => {
+    if (hasAvailableSlots(date)) {
+      setSelectedDate(formatDate(date))
+      setSelectedTime("") // Reset selected time when date changes
+    }
+  }
 
   // Função para lidar com a seleção de horário
   const handleTimeSelection = (time: string) => {
     setSelectedTime(time)
     // Redirecionar para a página de agendamento com os parâmetros
-    router.push(`/tutors/${tutor.id}/schedule?date=16/06/2025&time=${time}`)
+    router.push(`/tutors/${tutor.id}/schedule?date=${encodeURIComponent(selectedDate)}&time=${time}`)
   }
 
   // Função para enviar mensagem (apenas visual por enquanto)
@@ -113,39 +170,111 @@ export function TutorProfile({ tutor }: TutorProfileProps) {
               </div>
             </div>
 
-            {/* Seção: Disponibilidade */}
+            {/* Seção: Escolha de data e horário */}
             <div>
               <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <Calendar size={20} />
-                Escolha um horário para o dia {tutor.availability.date}:
+                Escolha uma data e horário:
               </h2>
-              <div className="flex flex-wrap gap-3">
-                {tutor.availability.times.map((time) => (
-                  <button
-                    key={time}
-                    onClick={() => handleTimeSelection(time)}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-                      selectedTime === time
-                        ? "bg-teal-600 text-white shadow-md"
-                        : "bg-teal-500 hover:bg-teal-600 text-white"
-                    }`}
-                    aria-label={`Agendar sessão às ${time} do dia ${tutor.availability.date}`}
-                  >
-                    <Clock size={16} className="inline mr-2" />
-                    {time}
-                  </button>
-                ))}
+
+              {/* Calendário */}
+              <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800 capitalize">{calendarData.monthName}</h3>
+                  <div className="flex gap-2">
+                    <button className="p-2 hover:bg-gray-100 rounded-md">
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button className="p-2 hover:bg-gray-100 rounded-md">
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Cabeçalho dos dias da semana */}
+                <div className="grid grid-cols-7 gap-1 mb-2">
+                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((day) => (
+                    <div key={day} className="p-2 text-center text-sm font-medium text-gray-500">
+                      {day}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Dias do calendário */}
+                <div className="grid grid-cols-7 gap-1">
+                  {calendarData.days.map((date, index) => {
+                    const isCurrentMonth = date.getMonth() === calendarData.currentMonth
+                    const isToday = date.toDateString() === new Date().toDateString()
+                    const isSelected = selectedDate === formatDate(date)
+                    const isAvailable = hasAvailableSlots(date)
+                    const isDisabled = !isCurrentMonth || !isAvailable
+
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => handleDateSelection(date)}
+                        disabled={isDisabled}
+                        className={`
+                          p-2 text-sm rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-teal-500
+                          ${isDisabled ? "text-gray-300 cursor-not-allowed" : "hover:bg-teal-50 cursor-pointer"}
+                          ${
+                            isSelected
+                              ? "bg-teal-500 text-white"
+                              : isToday
+                                ? "bg-teal-100 text-teal-800 font-semibold"
+                                : isCurrentMonth
+                                  ? "text-gray-700"
+                                  : "text-gray-300"
+                          }
+                        `}
+                      >
+                        {date.getDate()}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <div className="mt-4 text-sm text-gray-500">
+                  <p>• Disponível de segunda a sexta-feira</p>
+                  <p>• Selecione uma data para ver os horários disponíveis</p>
+                </div>
               </div>
 
-              {/* Feedback visual quando um horário é selecionado */}
-              {selectedTime && (
-                <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-lg">
-                  <p className="text-green-800 font-medium">
-                    ✓ Horário selecionado: {selectedTime} do dia {tutor.availability.date}
-                  </p>
-                  <p className="text-green-700 text-sm mt-1">
-                    Clique em "Enviar mensagem" para confirmar o agendamento com {tutor.name}.
-                  </p>
+              {/* Horários disponíveis - só aparecem após selecionar uma data */}
+              {selectedDate && (
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Horários disponíveis para {selectedDate}:
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {tutor.availability.times.map((time) => (
+                      <button
+                        key={time}
+                        onClick={() => handleTimeSelection(time)}
+                        className={`px-6 py-3 rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
+                          selectedTime === time
+                            ? "bg-teal-600 text-white shadow-md"
+                            : "bg-teal-500 hover:bg-teal-600 text-white"
+                        }`}
+                        aria-label={`Agendar sessão às ${time} do dia ${selectedDate}`}
+                      >
+                        <Clock size={16} className="inline mr-2" />
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Feedback visual quando um horário é selecionado */}
+                  {selectedTime && (
+                    <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-lg">
+                      <p className="text-green-800 font-medium">
+                        ✓ Horário selecionado: {selectedTime} do dia {selectedDate}
+                      </p>
+                      <p className="text-green-700 text-sm mt-1">
+                        Clique em "Enviar mensagem" para confirmar o agendamento com {tutor.name}.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

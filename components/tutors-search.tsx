@@ -251,6 +251,8 @@ export function TutorsSearch() {
             </div>
           </div>
 
+          <div className="text-center text-gray-500 my-4">ou</div>
+
           {/* Filtro por horário disponível */}
           <div className="mb-6">
             <label htmlFor="time" className="block text-gray-700 font-medium mb-2">

@@ -26,6 +26,16 @@ export default function AppointmentsPage() {
             className="mb-8"
           />
 
+          {/* Botão Encontre um tutor */}
+          <div className="mb-6">
+            <a
+              href="/tutors"
+              className="inline-flex items-center px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            >
+              Encontre um tutor
+            </a>
+          </div>
+
           {/* Título da página */}
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Meus agendamentos</h1>
 

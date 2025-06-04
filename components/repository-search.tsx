@@ -278,12 +278,6 @@ export function RepositorySearch() {
           {/* Botões de ação */}
           <div className="flex flex-wrap gap-3">
             <button
-              onClick={handleSearch}
-              className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-            >
-              Buscar
-            </button>
-            <button
               onClick={clearFilters}
               className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
             >
