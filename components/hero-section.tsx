@@ -9,7 +9,7 @@ export function HeroSection() {
           <div className="md:w-1/3 flex justify-center">
             <Image
               src="/images/logo.png"
-              alt="Mascote da Mensi - letra M com um lápis animado"
+              alt="A imagem mostra uma letra 'M' maiúsculas e arredondada, de cor azul, encostado do lado direito da letra há um lápis grande e colorido, desenhado de forma divertida e humanizada. Esse lápis tem olhos grandes, um sorriso simpático e está usando uma borracha rosa no topo, como se fosse um chapéu. A ponta do lápis está apontada para baixo, como se estivesse escrevendo."
               width={300}
               height={300}
               priority
@@ -36,7 +36,7 @@ export function HeroSection() {
               </p>
             </div>
 
-            <div>
+            <div className="pt-4 text-center md:text-left">
               <Link
                 href="/login"
                 className="inline-block bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"

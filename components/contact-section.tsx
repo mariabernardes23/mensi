@@ -70,7 +70,12 @@ export function ContactSection() {
             </div>
 
             <div className="hidden lg:block">
-              <Image src="/images/assistance.png" alt="Ilustração de assistência" width={200} height={200} />
+              <Image 
+                src="/images/assistance.png" 
+                alt="Uma mão com o dedo indicador apontado para cima está tocando uma tela com seis botões coloridos dispostos em duas fileiras de três. Cada botão tem um símbolo que representa uma reação ou ação" 
+                width={200} 
+                height={200} 
+              />
             </div>
           </div>
 

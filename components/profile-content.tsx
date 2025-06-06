@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Calendar, Award } from "lucide-react"
 import { ExpandableSection } from "@/components/expandable-section"
 
@@ -12,6 +13,59 @@ export function ProfileContent() {
     communities: false,
     materials: false,
   })
+
+  // Estados para o avatar personalizado
+  const [avatarConfig, setAvatarConfig] = useState<{
+    baseAvatar: string
+    complement?: string
+  } | null>(null)
+
+  // Carregar configuração do avatar do localStorage
+  useEffect(() => {
+    const savedConfig = localStorage.getItem("mensi-avatar-config")
+    if (savedConfig) {
+      try {
+        const config = JSON.parse(savedConfig)
+        setAvatarConfig({
+          baseAvatar: config.baseAvatar || "letter-a-orange",
+          complement: config.complements?.[0] || undefined,
+        })
+      } catch (error) {
+        console.error("Erro ao carregar configuração do avatar:", error)
+        setAvatarConfig({ baseAvatar: "letter-a-orange" })
+      }
+    } else {
+      setAvatarConfig({ baseAvatar: "letter-a-orange" })
+    }
+  }, [])
+
+  // Função para obter a imagem do avatar
+  const getAvatarImage = () => {
+    if (!avatarConfig) return "/placeholder.svg"
+
+    const avatarMap: { [key: string]: string } = {
+      "letter-a-orange": "/images/avatars/letter-a-orange.png",
+      "letter-a-green": "/images/avatars/letter-a-green.png",
+      "letter-a-cyan": "/images/avatars/letter-a-cyan.png",
+      "letter-a-pink": "/images/avatars/letter-a-pink.png",
+    }
+
+    return avatarMap[avatarConfig.baseAvatar] || avatarMap["letter-a-orange"]
+  }
+
+  // Função para obter a imagem do complemento
+  const getComplementImage = () => {
+    if (!avatarConfig?.complement) return null
+
+    const complementMap: { [key: string]: string } = {
+      apple: "/images/complements/apple.png",
+      pencil: "/images/complements/pencil.png",
+      elephant: "/images/complements/elephant.png",
+      tiger: "/images/complements/tiger.png",
+    }
+
+    return complementMap[avatarConfig.complement] || null
+  }
 
   // Função para alternar uma seção específica
   const toggleSection = (section: keyof typeof expandedSections) => {
@@ -44,9 +98,29 @@ export function ProfileContent() {
       {/* Seção de boas-vindas */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
         <div className="flex items-center gap-4">
-          {/* Avatar do usuário */}
-          <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-            A
+          {/* Avatar do usuário personalizado */}
+          <div className="relative w-16 h-16">
+            <div className="w-16 h-16 rounded-full overflow-hidden bg-white shadow-sm">
+              <Image
+                src={getAvatarImage() || "/placeholder.svg"}
+                alt="Seu avatar personalizado"
+                width={64}
+                height={64}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Complemento sobreposto */}
+            {getComplementImage() && (
+              <div className="absolute -top-1 -right-1 w-6 h-6">
+                <Image
+                  src={getComplementImage()! || "/placeholder.svg"}
+                  alt="Complemento do avatar"
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Adenilson, bem vindo!</h1>

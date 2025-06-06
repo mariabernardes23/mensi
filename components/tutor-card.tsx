@@ -6,6 +6,7 @@ interface Tutor {
   id: string
   name: string
   image: string
+  description: string
   title?: string
   institution?: string
   subjects: string[]
@@ -34,7 +35,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
         <div className="w-24 h-24 rounded-full overflow-hidden mb-4 bg-white flex items-center justify-center">
           <Image
             src={tutor.image || "/placeholder.svg"}
-            alt={`Foto de ${tutor.name}`}
+            alt={tutor.description}
             width={96}
             height={96}
             className="object-cover"

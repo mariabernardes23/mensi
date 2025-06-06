@@ -182,7 +182,7 @@ export function RepositorySearch() {
           {/* Filtro por disciplina */}
           <div className="mb-6">
             <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
-              Disciplina
+              Disciplina:
             </label>
             <div className="relative">
               <select
@@ -214,7 +214,7 @@ export function RepositorySearch() {
           {/* Filtro por série */}
           <div className="mb-6">
             <label htmlFor="grade" className="block text-gray-700 font-medium mb-2">
-              Série
+              Série:
             </label>
             <div className="relative">
               <select
@@ -246,7 +246,7 @@ export function RepositorySearch() {
           {/* Filtro por conteúdo */}
           <div className="mb-6">
             <label htmlFor="category" className="block text-gray-700 font-medium mb-2">
-              Conteúdo
+              Conteúdo:
             </label>
             <div className="relative">
               <select

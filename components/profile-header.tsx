@@ -22,7 +22,13 @@ export function ProfileHeader({ activeItem }: ProfileHeaderProps) {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image src="/images/logo_2.png" alt="Logo Mensi" width={120} height={40} priority />
+            <Image 
+              src="/images/logo_2.png"  
+              alt="A imagem é um logotipo com a palavra 'MENSI' escrita em letras maiúsculas e arredondadas, de cor azul. A última letra 'I' é substituída por um lápis desenhado de forma divertida e humanizada.Esse lápis tem olhos grandes, um sorriso simpático e está usando uma borracha rosa no topo, como se fosse um chapéu. A ponta do lápis está apontada para baixo, como se estivesse escrevendo. Abaixo dele, há uma linha ondulada preta, sugerindo que ele acabou de escrever 'me ensina'"  
+              width={120} 
+              height={40} 
+              priority 
+            />
           </Link>
 
           {/* Navegação principal - Desktop */}
@@ -52,7 +58,7 @@ export function ProfileHeader({ activeItem }: ProfileHeaderProps) {
               </li>
               <li>
                 <Link
-                  href="/community"
+                  href="/profile"
                   className={`flex items-center gap-2 ${
                     isActive("comunidade") ? "text-teal-600 font-medium" : "text-gray-800 hover:text-teal-600"
                   } focus:outline-none focus:ring-2 focus:ring-teal-500`}
@@ -74,7 +80,7 @@ export function ProfileHeader({ activeItem }: ProfileHeaderProps) {
               </li>
               <li>
                 <Link
-                  href="/messages"
+                  href="/profile"
                   className={`flex items-center gap-2 ${
                     isActive("mensagens") ? "text-teal-600 font-medium" : "text-gray-800 hover:text-teal-600"
                   } focus:outline-none focus:ring-2 focus:ring-teal-500`}
@@ -118,8 +124,7 @@ export function ProfileHeader({ activeItem }: ProfileHeaderProps) {
                   <hr className="my-1" />
                   <button
                     onClick={() => {
-                      // Implementar logout
-                      console.log("Logout")
+                      <Link href="/"> </Link>
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                   >

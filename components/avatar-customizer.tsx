@@ -84,7 +84,7 @@ const complementOptions: ComplementOption[] = [
 export function AvatarCustomizer() {
   // Estados para controlar a seleção
   const [selectedAvatar, setSelectedAvatar] = useState<string>("")
-  const [selectedComplements, setSelectedComplements] = useState<string[]>([])
+  const [selectedComplement, setSelectedComplement] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState<boolean>(false)
 
@@ -97,7 +97,7 @@ export function AvatarCustomizer() {
       try {
         const config: AvatarConfig = JSON.parse(savedConfig)
         setSelectedAvatar(config.baseAvatar || "letter-a-orange")
-        setSelectedComplements(config.complements || [])
+        setSelectedComplement(config.complements?.[0] || "")
       } catch (error) {
         console.error("Erro ao carregar configuração do avatar:", error)
         // Definir avatar padrão se houver erro
@@ -115,15 +115,16 @@ export function AvatarCustomizer() {
     setIsSaved(false)
   }
 
-  // Função para alternar seleção de complementos
-  const handleComplementToggle = (complementId: string) => {
-    setSelectedComplements((prev) => {
-      const isSelected = prev.includes(complementId)
-      const newComplements = isSelected ? prev.filter((id) => id !== complementId) : [...prev, complementId]
-
-      setIsSaved(false)
-      return newComplements
-    })
+  // Função para selecionar complemento (apenas um por vez)
+  const handleComplementSelection = (complementId: string) => {
+    // Se o complemento já está selecionado, desmarcar
+    if (selectedComplement === complementId) {
+      setSelectedComplement("")
+    } else {
+      // Caso contrário, selecionar o novo complemento
+      setSelectedComplement(complementId)
+    }
+    setIsSaved(false)
   }
 
   // Função para salvar as alterações
@@ -137,7 +138,7 @@ export function AvatarCustomizer() {
       // Salvar configuração no localStorage
       const config: AvatarConfig = {
         baseAvatar: selectedAvatar,
-        complements: selectedComplements,
+        complements: selectedComplement ? [selectedComplement] : [],
       }
 
       localStorage.setItem("mensi-avatar-config", JSON.stringify(config))
@@ -229,17 +230,17 @@ export function AvatarCustomizer() {
           {complementOptions.map((complement) => (
             <button
               key={complement.id}
-              onClick={() => handleComplementToggle(complement.id)}
+              onClick={() => handleComplementSelection(complement.id)}
               className={`
                 relative p-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2
                 ${
-                  selectedComplements.includes(complement.id)
+                  selectedComplement === complement.id
                     ? "bg-white border-4 border-teal-400 shadow-lg scale-105"
                     : "bg-white border-2 border-gray-200 hover:border-gray-300 hover:shadow-md"
                 }
               `}
-              aria-label={`${selectedComplements.includes(complement.id) ? "Remover" : "Adicionar"} complemento ${complement.name}`}
-              aria-pressed={selectedComplements.includes(complement.id)}
+              aria-label={`${selectedComplement === complement.id ? "Remover" : "Selecionar"} complemento ${complement.name}`}
+              aria-pressed={selectedComplement === complement.id}
             >
               {/* Imagem do complemento */}
               <div className="flex justify-center mb-2">
@@ -256,7 +257,7 @@ export function AvatarCustomizer() {
               <p className="text-sm font-medium text-gray-700 text-center">{complement.name}</p>
 
               {/* Indicador de seleção */}
-              {selectedComplements.includes(complement.id) && (
+              {selectedComplement === complement.id && (
                 <div className="absolute top-2 right-2 bg-teal-500 rounded-full p-1">
                   <Check size={16} className="text-white" />
                 </div>
@@ -283,21 +284,20 @@ export function AvatarCustomizer() {
             )}
 
             {/* Complementos sobrepostos (simulação visual) */}
-            {selectedComplements.length > 0 && (
-              <div className="absolute top-0 right-0 flex flex-wrap gap-1">
-                {selectedComplements.slice(0, 2).map((complementId, index) => {
-                  const complement = complementOptions.find((c) => c.id === complementId)
+            {selectedComplement && (
+              <div className="absolute top-0 right-0">
+                {(() => {
+                  const complement = complementOptions.find((c) => c.id === selectedComplement)
                   return complement ? (
                     <Image
-                      key={complementId}
                       src={complement.image || "/placeholder.svg"}
                       alt={complement.name}
                       width={30}
                       height={30}
-                      className={`object-contain ${index === 1 ? "ml-2" : ""}`}
+                      className="object-contain"
                     />
                   ) : null
-                })}
+                })()}
               </div>
             )}
           </div>
@@ -308,13 +308,9 @@ export function AvatarCustomizer() {
           <p>
             <strong>Avatar:</strong> {avatarOptions.find((a) => a.id === selectedAvatar)?.name || "Nenhum"}
           </p>
-          {selectedComplements.length > 0 && (
+          {selectedComplement && (
             <p>
-              <strong>Complementos:</strong>{" "}
-              {selectedComplements
-                .map((id) => complementOptions.find((c) => c.id === id)?.name)
-                .filter(Boolean)
-                .join(", ")}
+              <strong>Complemento:</strong> {complementOptions.find((c) => c.id === selectedComplement)?.name}
             </p>
           )}
         </div>
@@ -360,8 +356,8 @@ export function AvatarCustomizer() {
         <h4 className="font-medium text-blue-800 mb-2">Como usar:</h4>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• Escolha um avatar base (letra) clicando na opção desejada</li>
-          <li>• Adicione complementos clicando nos ícones que você gosta</li>
-          <li>• Você pode selecionar múltiplos complementos</li>
+          <li>• Adicione um complemento clicando no ícone que você gosta</li>
+          <li>• Você pode selecionar apenas um complemento por vez</li>
           <li>• Clique em "Salvar Alterações" para aplicar seu novo avatar</li>
           <li>• Seu avatar aparecerá atualizado na página de perfil</li>
         </ul>

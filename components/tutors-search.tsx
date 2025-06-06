@@ -9,6 +9,7 @@ interface Tutor {
   id: string
   name: string
   image: string
+  description: string
   title: string
   institution: string
   subjects: string[]
@@ -32,6 +33,7 @@ const tutorsData: Tutor[] = [
     id: "giovana-mattos",
     name: "Giovana Mattos",
     image: "/images/tutor-giovana.png",
+    description: "Uma mulher em pé contra um fundo azul-acinzentado. Ela está sorrindo de forma confiante e amigável, com os braços cruzados sobre o peito. Sua pele é escura, e ela tem cabelos pretos, cacheados e volumosos, na altura dos ombros. Ela está vestindo uma camisa de manga longa azul-escura. A expressão no rosto transmite simpatia, segurança e profissionalismo. ",
     title: "Mestranda",
     institution: "USP",
     subjects: ["Química", "Física", "Matemática"],
@@ -40,6 +42,7 @@ const tutorsData: Tutor[] = [
     id: "alberto-souza",
     name: "Alberto Souza",
     image: "/images/tutor-alberto.png",
+    description: "Um homem jovem em pé, ao ar livre, com um prédio moderno e vegetação ao fundo. Ele está sorrindo de maneira confiante e simpática, com os braços cruzados na frente do corpo. Tem pele escura, cabelos curtos e bem aparados. Está vestindo um blazer bege claro sobre uma camisa preta",
     title: "Doutorando",
     institution: "UFSCAR",
     subjects: ["Biologia", "Português", "Inglês"],
@@ -48,6 +51,7 @@ const tutorsData: Tutor[] = [
     id: "carlos-silva",
     name: "Carlos Silva",
     image: "/placeholder.svg?height=200&width=200",
+    description: "Um homem jovem com expressão de leve sorriso e ar confiante. Ele tem barba e bigode bem cheios, cabelo curto e escuro. Está vestindo uma camisa xadrez em tons de azul-marinho e branco, sob um blazer azul-escuro com textura. O fundo é totalmente branco.",
     title: "Professor",
     institution: "UNICAMP",
     subjects: ["História", "Geografia", "Sociologia"],
@@ -56,6 +60,7 @@ const tutorsData: Tutor[] = [
     id: "mariana-costa",
     name: "Mariana Costa",
     image: "/placeholder.svg?height=200&width=200",
+    description:"",
     title: "Especialista",
     institution: "UFMG",
     subjects: ["Literatura", "Redação", "Gramática"],
@@ -163,10 +168,10 @@ export function TutorsSearch() {
         <div className="bg-white p-6 rounded-lg shadow-sm">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Qual tutor está procurando?</h2>
 
-          {/* Filtro por disciplina/conteúdo */}
+          {/* Filtro por disciplina ou conteúdo */}
           <div className="mb-6">
             <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
-              Disciplina/Conteúdo:
+              Disciplina ou conteúdo:
             </label>
             <div className="relative">
               <select
@@ -200,7 +205,7 @@ export function TutorsSearch() {
           {/* Filtro por nome do tutor */}
           <div className="mb-6">
             <label htmlFor="tutorName" className="block text-gray-700 font-medium mb-2">
-              Digite o nome do tutor:
+              Nome do tutor:
             </label>
             <div className="relative">
               <input
@@ -208,7 +213,7 @@ export function TutorsSearch() {
                 id="tutorName"
                 value={tutorName}
                 onChange={(e) => setTutorName(e.target.value)}
-                placeholder="Digite o nome do tutor que está procurando"
+                placeholder="Digite o nome do tutor"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">

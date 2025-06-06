@@ -26,7 +26,7 @@ export function AboutSection() {
               colaborativo.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-4 text-center md:text-left">
               <Link
                 href="/register"
                 className="inline-block bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
@@ -39,7 +39,7 @@ export function AboutSection() {
           <div className="lg:w-1/3 flex justify-center">
             <Image
               src="/images/foto.png"
-              alt="Ilustração representando estudantes e tutores online"
+              alt="Ilustração representando educação online: quatro pessoas à esquerda em frente a um globo, um professor em uma tela de computador no canto superior direito, e abaixo elementos gráficos como imagem, vídeo, texto com lápis e um ícone de megafone. A imagem sugere ensino a distância e comunicação digital."
               width={400}
               height={300}
             />

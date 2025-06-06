@@ -12,7 +12,13 @@ export function MainNavigation() {
     <header className="bg-sky-100 py-4" id="menu" tabIndex={-1}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
-          <Image src="/images/logo_2.png" alt="Logo Mensi" width={120} height={40} priority />
+          <Image 
+            src="/images/logo_2.png"
+            alt="A imagem é um logotipo com a palavra 'MENSI' escrita em letras maiúsculas e arredondadas, de cor azul. A última letra 'I' é substituída por um lápis desenhado de forma divertida e humanizada.Esse lápis tem olhos grandes, um sorriso simpático e está usando uma borracha rosa no topo, como se fosse um chapéu. A ponta do lápis está apontada para baixo, como se estivesse escrevendo. Abaixo dele, há uma linha ondulada preta, sugerindo que ele acabou de escrever 'me ensina'" 
+            width={120} 
+            height={40} 
+            priority 
+          />
         </Link>
 
         {/* Menu para desktop */}
@@ -50,16 +56,16 @@ export function MainNavigation() {
                 Fale Conosco
               </Link>
             </li>
+            <li>
+              <Link
+                href="/login"
+                className="text-gray-800 hover:text-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              >
+                Entrar
+              </Link>
+            </li>
           </ul>
         </nav>
-
-        <Link
-          href="/login"
-          className="hidden md:block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-        >
-          Entrar
-        </Link>
-
         <Link
           href="/register"
           className="hidden md:block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
@@ -121,8 +127,8 @@ export function MainNavigation() {
               </li>
               <li>
                 <Link
-                  href="/login"
-                  className="block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md text-center focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                  href="/register"
+                  className="block text-gray-800 hover:text-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Entrar
