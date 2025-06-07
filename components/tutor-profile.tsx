@@ -21,6 +21,7 @@ interface TutorData {
   name: string
   title: string
   image: string
+  description: string
   subjects: string[]
   specialties: TutorSpecialty[]
   availability: TutorAvailability
@@ -118,8 +119,8 @@ export function TutorProfile({ tutor }: TutorProfileProps) {
               <div className="flex-shrink-0">
                 <div className="w-32 h-32 rounded-full overflow-hidden bg-white shadow-md">
                   <Image
-                    src={tutor.image || "/placeholder.svg"}
-                    alt={`Foto de ${tutor.name}`}
+                    src={tutor.image}
+                    alt={tutor.description}
                     width={128}
                     height={128}
                     className="w-full h-full object-cover"
@@ -303,27 +304,6 @@ export function TutorProfile({ tutor }: TutorProfileProps) {
                 </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Seção adicional para futuras funcionalidades */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Avaliações (placeholder para futuro desenvolvimento) */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Avaliações dos estudantes</h3>
-          <div className="text-center text-gray-500 py-8">
-            <p>Avaliações em breve!</p>
-            <p className="text-sm mt-2">Os estudantes poderão avaliar as sessões de tutoria.</p>
-          </div>
-        </div>
-
-        {/* Histórico de aulas (placeholder para futuro desenvolvimento) */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Próximas sessões</h3>
-          <div className="text-center text-gray-500 py-8">
-            <p>Nenhuma sessão agendada</p>
-            <p className="text-sm mt-2">Agende uma sessão para começar a aprender!</p>
           </div>
         </div>
       </div>

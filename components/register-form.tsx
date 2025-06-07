@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Eye, EyeOff, HelpCircle, CheckCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -49,6 +49,45 @@ export function RegisterForm() {
   // Estados para controlar os modais
   const [showGuardianInfoModal, setShowGuardianInfoModal] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showPasswordTooltip, setShowPasswordTooltip] = useState(false)
+
+  // Estado para verificar se o usuário é maior de idade
+  const [isAdult, setIsAdult] = useState(false)
+
+  // Função para calcular a idade baseada na data de nascimento
+  const calculateAge = (birthDateString: string): number => {
+    if (!birthDateString || birthDateString.length !== 10) return 0
+
+    const [day, month, year] = birthDateString.split("/").map(Number)
+    if (!day || !month || !year) return 0
+
+    const today = new Date()
+    const birthDate = new Date(year, month - 1, day)
+
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+
+    return age
+  }
+
+  // Efeito para verificar a idade quando a data de nascimento muda
+  useEffect(() => {
+    const age = calculateAge(formData.birthDate)
+    setIsAdult(age >= 18)
+
+    // Se o usuário se tornou maior de idade, limpar o campo de e-mail do responsável
+    if (age >= 18 && formData.guardianEmail) {
+      setFormData((prev) => ({ ...prev, guardianEmail: "" }))
+      // Limpar erro do e-mail do responsável se existir
+      if (errors.guardianEmail) {
+        setErrors((prev) => ({ ...prev, guardianEmail: undefined }))
+      }
+    }
+  }, [formData.birthDate])
 
   const router = useRouter()
 
@@ -81,25 +120,26 @@ export function RegisterForm() {
       newErrors.email = "E-mail inválido"
     }
 
-    // Validação do e-mail do responsável
-    if (!formData.guardianEmail.trim()) {
-      newErrors.guardianEmail = "E-mail do responsável é obrigatório"
-    } else if (!/\S+@\S+\.\S+/.test(formData.guardianEmail)) {
-      newErrors.guardianEmail = "E-mail do responsável inválido"
-    } else if (formData.guardianEmail === formData.email) {
-      newErrors.guardianEmail = "E-mail do responsável deve ser diferente do seu e-mail"
+    // Validação do e-mail do responsável (apenas se menor de idade)
+    if (!isAdult) {
+      if (!formData.guardianEmail.trim()) {
+        newErrors.guardianEmail = "E-mail do responsável é obrigatório para menores de 18 anos"
+      } else if (!/\S+@\S+\.\S+/.test(formData.guardianEmail)) {
+        newErrors.guardianEmail = "E-mail do responsável inválido"
+      } else if (formData.guardianEmail === formData.email) {
+        newErrors.guardianEmail = "E-mail do responsável deve ser diferente do seu e-mail"
+      }
     }
 
     // Validação da data de nascimento
     if (!formData.birthDate) {
       newErrors.birthDate = "Data de nascimento é obrigatória"
     } else {
-      const birthDate = new Date(formData.birthDate)
-      const today = new Date()
-      const age = today.getFullYear() - birthDate.getFullYear()
-
-      if (age < 13 || age > 100) {
-        newErrors.birthDate = "Idade deve estar entre 13 e 100 anos"
+      const age = calculateAge(formData.birthDate)
+      if (age < 13) {
+        newErrors.birthDate = "Você deve ter pelo menos 13 anos para se cadastrar"
+      } else if (age > 100) {
+        newErrors.birthDate = "Idade deve ser menor que 100 anos"
       }
     }
 
@@ -191,7 +231,7 @@ export function RegisterForm() {
             {/* Primeira linha - Nome e Data de Nascimento */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Nome completo */}
-              <div>
+              <div className="flex flex-col">
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
                   Nome completo <span className="text-red-500">*</span>
                 </label>
@@ -215,7 +255,7 @@ export function RegisterForm() {
               </div>
 
               {/* Data de nascimento */}
-              <div>
+              <div className="flex flex-col">
                 <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700 mb-2">
                   Data de nascimento (dd/mm/aaaa) <span className="text-red-500">*</span>
                 </label>
@@ -243,7 +283,7 @@ export function RegisterForm() {
             {/* Segunda linha - E-mail e Senha */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* E-mail */}
-              <div>
+              <div className="flex flex-col">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   E-mail <span className="text-red-500">*</span>
                 </label>
@@ -267,9 +307,39 @@ export function RegisterForm() {
               </div>
 
               {/* Senha */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="flex flex-col">
+                <label htmlFor="password" className="flex items-center text-sm font-medium text-gray-700 mb-2">
                   Senha <span className="text-red-500">*</span>
+                  <div className="relative ml-2">
+                    <button
+                      type="button"
+                      onMouseEnter={() => setShowPasswordTooltip(true)}
+                      onMouseLeave={() => setShowPasswordTooltip(false)}
+                      onFocus={() => setShowPasswordTooltip(true)}
+                      onBlur={() => setShowPasswordTooltip(false)}
+                      className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full"
+                      aria-label="Informações sobre requisitos da senha"
+                    >
+                      <HelpCircle size={16} />
+                    </button>
+
+                    {/* Tooltip */}
+                    {showPasswordTooltip && (
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-800 text-white text-xs rounded-lg p-3 z-10">
+                        <div className="space-y-1">
+                          <p className="font-medium">Sua senha deve conter:</p>
+                          <ul className="space-y-1">
+                            <li>• Pelo menos 6 caracteres</li>
+                            <li>• Recomendado: letras maiúsculas e minúsculas</li>
+                            <li>• Recomendado: números</li>
+                            <li>• Recomendado: símbolos especiais (!@#$%)</li>
+                          </ul>
+                        </div>
+                        {/* Seta do tooltip */}
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                      </div>
+                    )}
+                  </div>
                 </label>
                 <div className="relative">
                   <input
@@ -303,40 +373,53 @@ export function RegisterForm() {
 
             {/* Terceira linha - E-mail do responsável e Confirmação de senha */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* E-mail do responsável */}
-              <div>
-                <label htmlFor="guardianEmail" className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  E-mail do responsável
-                  <button
-                    type="button"
-                    onClick={() => setShowGuardianInfoModal(true)}
-                    className="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full"
-                    aria-label="Informações sobre e-mail do responsável"
-                  >
-                    <HelpCircle size={16} />
-                  </button>
-                </label>
-                <input
-                  type="email"
-                  id="guardianEmail"
-                  name="guardianEmail"
-                  value={formData.guardianEmail}
-                  onChange={handleChange}
-                  placeholder="Digite o e-mail do seu responsável"
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors ${
-                    errors.guardianEmail ? "border-red-500" : "border-gray-300"
-                  }`}
-                  aria-describedby={errors.guardianEmail ? "guardianEmail-error" : undefined}
-                />
-                {errors.guardianEmail && (
-                  <p id="guardianEmail-error" className="mt-1 text-sm text-red-600" role="alert">
-                    {errors.guardianEmail}
-                  </p>
+              {/* E-mail do responsável - condicional baseado na idade */}
+              <div className="flex flex-col">
+                {!isAdult ? (
+                  <>
+                    <label htmlFor="guardianEmail" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                      E-mail do responsável <span className="text-red-500">*</span>
+                      <button
+                        type="button"
+                        onClick={() => setShowGuardianInfoModal(true)}
+                        className="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full"
+                        aria-label="Informações sobre e-mail do responsável"
+                      >
+                        <HelpCircle size={16} />
+                      </button>
+                    </label>
+                    <input
+                      type="email"
+                      id="guardianEmail"
+                      name="guardianEmail"
+                      value={formData.guardianEmail}
+                      onChange={handleChange}
+                      placeholder="Digite o e-mail do seu responsável"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors ${
+                        errors.guardianEmail ? "border-red-500" : "border-gray-300"
+                      }`}
+                      aria-describedby={errors.guardianEmail ? "guardianEmail-error" : undefined}
+                    />
+                    {errors.guardianEmail && (
+                      <p id="guardianEmail-error" className="mt-1 text-sm text-red-600" role="alert">
+                        {errors.guardianEmail}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div className="h-6 mb-2"></div> {/* Espaço para manter alinhamento do label */}
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-center min-h-[52px]">
+                      <p className="text-green-800 text-sm text-center">
+                        ✓ Como você é maior de idade, não é necessário informar o e-mail de um responsável.
+                      </p>
+                    </div>
+                  </>
                 )}
               </div>
 
               {/* Confirmação de senha */}
-              <div>
+              <div className="flex flex-col">
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                   Confirmação da senha <span className="text-red-500">*</span>
                 </label>

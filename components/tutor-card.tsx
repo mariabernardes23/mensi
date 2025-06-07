@@ -34,7 +34,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
         {/* Imagem do tutor */}
         <div className="w-24 h-24 rounded-full overflow-hidden mb-4 bg-white flex items-center justify-center">
           <Image
-            src={tutor.image || "/placeholder.svg"}
+            src={tutor.image}
             alt={tutor.description}
             width={96}
             height={96}

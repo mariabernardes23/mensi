@@ -22,6 +22,20 @@ const tutorsData = {
     subjects: ["Biologia", "Português", "Inglês"],
     verified: true,
   },
+  "carlos-silva": {
+    id: "carlos-silva",
+    name: "Carlos Silva",
+    title: "Professor UNICAMP",
+    subjects: ["História", "Geografia", "Sociologia"],
+    verified: true,
+  },
+  "mariana-costa": {
+    id: "mariana-costa",
+    name: "Mariana Costa",
+    title: "Especialista UFMG",
+    subjects: ["Literatura", "Redação", "Gramática"],
+    verified: true,
+  },
 }
 
 interface SchedulePageProps {

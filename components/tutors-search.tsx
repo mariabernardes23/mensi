@@ -32,7 +32,7 @@ const tutorsData: Tutor[] = [
   {
     id: "giovana-mattos",
     name: "Giovana Mattos",
-    image: "/images/tutor-giovana.png",
+    image: "/images/tutora-giovana.png",
     description: "Uma mulher em pé contra um fundo azul-acinzentado. Ela está sorrindo de forma confiante e amigável, com os braços cruzados sobre o peito. Sua pele é escura, e ela tem cabelos pretos, cacheados e volumosos, na altura dos ombros. Ela está vestindo uma camisa de manga longa azul-escura. A expressão no rosto transmite simpatia, segurança e profissionalismo. ",
     title: "Mestranda",
     institution: "USP",
@@ -50,7 +50,7 @@ const tutorsData: Tutor[] = [
   {
     id: "carlos-silva",
     name: "Carlos Silva",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/images/tutor-carlos.jpg",
     description: "Um homem jovem com expressão de leve sorriso e ar confiante. Ele tem barba e bigode bem cheios, cabelo curto e escuro. Está vestindo uma camisa xadrez em tons de azul-marinho e branco, sob um blazer azul-escuro com textura. O fundo é totalmente branco.",
     title: "Professor",
     institution: "UNICAMP",
@@ -59,8 +59,8 @@ const tutorsData: Tutor[] = [
   {
     id: "mariana-costa",
     name: "Mariana Costa",
-    image: "/placeholder.svg?height=200&width=200",
-    description:"",
+    image: "/images/tutora-mariana.jpg",
+    description:"Uma jovem mulher sorridente em frente a um fundo branco. Ela tem pele clara, cabelos longos, lisos e escuros, e está com os fios soltos, caindo sobre os ombros. Seus olhos são escuros e ela exibe um sorriso largo, transmitindo simpatia e confiança. Veste uma camiseta azul-clara e está posicionada de forma central na imagem, com os braços parcialmente visíveis. A iluminação é uniforme, destacando seu rosto de maneira suave.",
     title: "Especialista",
     institution: "UFMG",
     subjects: ["Literatura", "Redação", "Gramática"],

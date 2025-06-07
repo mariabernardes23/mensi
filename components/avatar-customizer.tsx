@@ -351,7 +351,7 @@ export function AvatarCustomizer() {
         </button>
       </div>
 
-      {/* Instruções de uso */}
+    {/* Instruções de uso 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h4 className="font-medium text-blue-800 mb-2">Como usar:</h4>
         <ul className="text-sm text-blue-700 space-y-1">
@@ -361,7 +361,8 @@ export function AvatarCustomizer() {
           <li>• Clique em "Salvar Alterações" para aplicar seu novo avatar</li>
           <li>• Seu avatar aparecerá atualizado na página de perfil</li>
         </ul>
-      </div>
+      </div> 
+    */}
     </div>
   )
 }

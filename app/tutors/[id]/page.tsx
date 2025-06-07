@@ -12,7 +12,8 @@ const tutorsData = {
     id: "giovana-mattos",
     name: "Giovana Mattos",
     title: "Mestranda USP",
-    image: "/images/tutor-giovana.png",
+    image: "/images/tutora-giovana.png",
+    description: "Aui",
     subjects: ["Química", "Física", "Matemática"],
     specialties: [
       {
@@ -39,6 +40,7 @@ const tutorsData = {
     name: "Alberto Souza",
     title: "Doutorando UFSCAR",
     image: "/images/tutor-alberto.png",
+    description: "",
     subjects: ["Biologia", "Português", "Inglês"],
     specialties: [
       {
@@ -60,6 +62,60 @@ const tutorsData = {
     },
     bio: "Formado em Matemática pela UFCAR. Trabalha como professor da rede pública e possui grande experiência com ensino de matemática.",
   },
+  "carlos-silva": {
+    id: "carlos-silva",
+    name: "Carlos Silva",
+    title: "Professor UNICAMP",
+    image: "/images/tutor-carlos.jpg",
+    description: "",
+    subjects: ["História", "Geografia", "Sociologia"],
+    specialties: [
+      {
+        category: "História",
+        items: ["História Geral", "História do Brasil", "História Contemporânea"]
+      },
+      {
+        category: "Geografia",
+        items: ["Geopolítica", "Geografia Física", "Cartografia"]
+      },
+      {
+        category: "Sociologia",
+        items: ["Teorias Sociológicas", "Cidadania", "Movimentos Sociais"]
+      }
+    ],
+    availability: {
+    date: "16/06/2025",
+    times: ["07:00", "09:00", "13:00"]
+  },
+    bio: "Professor da UNICAMP com ampla experiência no ensino de Ciências Humanas. Atua nas áreas de História, Geografia e Sociologia, com foco em pensamento crítico e interdisciplinaridade."
+  },
+  "mariana-costa": {
+    id: "mariana-costa",
+    name: "Mariana Costa",
+    title: "Especialista em Linguagens",
+    image: "/images/tutora-mariana.jpg",
+    description: "",
+    subjects: ["Literatura", "Redação", "Gramática"],
+    specialties: [
+      {
+        category: "Literatura",
+        items: ["Literatura Brasileira", "Literatura Portuguesa", "Análise de Obras"]
+      },
+      {
+        categor: "Redação",
+        items: ["Dissertação", "Coesão e Coerência", "Estrutura Textual"]
+      },
+      {
+        category: "Gramática",
+        items: ["Morfologia", "Sintaxe", "Ortografia"]
+      }
+    ],
+    availability: {
+      date: "16/06/2025",
+      times: ["08:00", "13:00", "18:00"]
+    },
+    bio: "specialista em Linguagens pela UFMG, Mariana atua há mais de 10 anos com preparação para vestibulares e ENEM, com foco em produção textual, gramática e literatura."
+  }
 }
 
 interface TutorPageProps {
