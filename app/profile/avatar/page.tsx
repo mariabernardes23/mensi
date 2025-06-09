@@ -1,3 +1,5 @@
+"use client"
+
 import { AccessibilityMenu } from "@/components/accessibility-menu"
 import { ProfileHeader } from "@/components/profile-header"
 import { AvatarCustomizer } from "@/components/avatar-customizer"
