@@ -312,6 +312,7 @@ export function RegisterForm() {
                   Senha <span className="text-red-500">*</span>
                   <div className="relative ml-2">
                     <button
+                        className="m-0"
                       type="button"
                       onMouseEnter={() => setShowPasswordTooltip(true)}
                       onMouseLeave={() => setShowPasswordTooltip(false)}
@@ -320,7 +321,7 @@ export function RegisterForm() {
                       className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full"
                       aria-label="Informações sobre requisitos da senha"
                     >
-                      <HelpCircle size={16} />
+                      <HelpCircle size={16}/>
                     </button>
 
                     {/* Tooltip */}

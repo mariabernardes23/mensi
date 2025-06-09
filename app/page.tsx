@@ -36,7 +36,7 @@ export default function Home() {
       <Footer />
 
       {/* Botão de acessibilidade flutuante */}
-      <AccessibilityButton />
+      {/*<AccessibilityButton />*/}
     </main>
   )
 }

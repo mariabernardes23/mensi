@@ -127,7 +127,7 @@ export function MainNavigation() {
               </li>
               <li>
                 <Link
-                  href="/register"
+                  href="/login"
                   className="block text-gray-800 hover:text-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   onClick={() => setIsMenuOpen(false)}
                 >
