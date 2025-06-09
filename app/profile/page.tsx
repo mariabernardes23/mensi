@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import { AccessibilityButton } from "@/components/accessibility-button"
 
 export default function ProfilePage() {
+  if (typeof window === 'undefined') return null;
   return (
     <main className="min-h-screen flex flex-col">
       {/* Menu de acessibilidade - mesmo das outras páginas */}
