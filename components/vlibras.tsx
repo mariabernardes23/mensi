@@ -1,31 +1,28 @@
-"use client"
+'use client'
 
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 export function VLibras() {
   useEffect(() => {
-    const script = document.createElement("script")
-    script.id = "vlibras-script"
-    script.src = "https://vlibras.gov.br/app/vlibras-plugin.js"
+    const script = document.createElement('script')
+    script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js'
     script.async = true
+
     script.onload = () => {
-      const interval = setInterval(() => {
-        if ((window as any).VLibras) {
-          new (window as any).VLibras.Widget("https://vlibras.gov.br/app")
-          clearInterval(interval)
+      const checkVLibras = setInterval(() => {
+        if (window.VLibras && typeof window.VLibras.Widget === 'function') {
+          new window.VLibras.Widget('https://vlibras.gov.br/app')
+          clearInterval(checkVLibras)
         }
-      }, 300)
+      }, 500)
     }
 
     document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
   }, [])
 
-  return (
-    <div vw="true" className="enabled">
-      <div vw-access-button="true" className="active"></div>
-      <div vw-plugin-wrapper="true">
-        <div className="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
-  )
+  return null // não renderiza manualmente a estrutura do plugin
 }

@@ -117,3 +117,8 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* Evitar resetar todos os estilos dos elementos do VLibras */
+[vw]:not(.enabled):not([vw-access-button]) {
+  all: revert !important;
+}
