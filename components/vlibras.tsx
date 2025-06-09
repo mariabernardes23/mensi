@@ -1,4 +1,4 @@
-'use client'
+/*'use client'
 
 import { useEffect } from 'react'
 
@@ -40,4 +40,4 @@ export function VLibras() {
       </div>
     </div>
   )
-}
+}*/

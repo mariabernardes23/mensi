@@ -4,7 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AccessibilityButton } from "@/components/accessibility-button"
-import { VLibras } from "@/components/vlibras"
+//import { VLibras } from "@/components/vlibras"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {children}
           {/* Botão de acessibilidade flutuante global */}
-          <VLibras />
+          {/*<VLibras />*/}
         </ThemeProvider>
       </body>
     </html>
