@@ -1,3 +1,4 @@
+import { AccessibilityMenu } from "@/components/accessibility-menu"
 import { ProfileHeader } from "@/components/profile-header"
 import { AchievementsGrid } from "@/components/achievements-grid"
 import { Footer } from "@/components/footer"
