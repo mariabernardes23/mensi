@@ -119,6 +119,6 @@ img {
 }
 
 /* Evitar resetar todos os estilos dos elementos do VLibras */
-[vw]:not(.enabled):not([vw-access-button]) {
+/*[vw]:not(.enabled):not([vw-access-button]) {
   all: revert !important;
-}
+}*/
