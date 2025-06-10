@@ -1,14 +1,4 @@
-/*'use client'
-
 import { useEffect } from 'react'
-
-declare global {
-  interface Window {
-    VLibras: {
-      Widget: new (url: string) => void;
-    };
-  }
-}
 
 export function VLibras() {
   useEffect(() => {
@@ -33,11 +23,11 @@ export function VLibras() {
   }, [])
 
   return (
-    <div data-vw="true" className="enabled">
+    <div vw="true" className="enabled">
       <div vw-access-button="true" className="active"></div>
       <div vw-plugin-wrapper="true">
         <div className="vw-plugin-top-wrapper"></div>
       </div>
     </div>
   )
-}*/
+}
