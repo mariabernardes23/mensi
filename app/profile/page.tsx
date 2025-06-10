@@ -1,3 +1,4 @@
+'use client'
 import { ProfileHeader } from "@/components/profile-header"
 import { ProfileContent } from "@/components/profile-content"
 import { AccessibilityMenu } from "@/components/accessibility-menu"
